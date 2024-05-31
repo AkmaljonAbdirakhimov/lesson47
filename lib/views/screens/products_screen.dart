@@ -3,6 +3,7 @@ import 'package:lesson47/models/product.dart';
 import 'package:lesson47/viewmodels/products_viewmodel.dart';
 import 'package:lesson47/views/widgets/manage_product_dialog.dart';
 import 'package:lesson47/views/widgets/product_item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
@@ -13,6 +14,18 @@ class ProductsScreen extends StatefulWidget {
 
 class _ProductsScreenState extends State<ProductsScreen> {
   final productsViewModel = ProductsViewmodel();
+  late SharedPreferences sharedPreferences;
+
+  @override
+  void initState() {
+    super.initState();
+
+    initSharedPrefs();
+  }
+
+  void initSharedPrefs() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+  }
 
   void addProduct() async {
     final data = await showDialog(
